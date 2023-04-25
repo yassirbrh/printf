@@ -17,6 +17,8 @@ int _printf(const char *format, ...)
 	char *output;
 	int len, i;
 
+	if (format == NULL)
+	return (-1);
 	i = len = 0;
 	va_start(arg_list, format);
 	len = count_output(arg_list, format);
