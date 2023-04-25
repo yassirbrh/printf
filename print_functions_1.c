@@ -12,7 +12,7 @@
  */
 int count_output(va_list arg_list, const char *format)
 {
-	int i = 0, len = 0, var = 0;
+	int i = 0, len = 0, dir = 0;
 
 	while (*(format + i) != '\0')
 	{
@@ -22,12 +22,11 @@ int count_output(va_list arg_list, const char *format)
 			va_arg(arg_list, int);
 			else if (*(format + i + 1) == 's')
 			len += _strlen(va_arg(arg_list, char *));
-			if (*(format + i + 1) == 's' || *(format + i + 1) == 'c')
-			var++;
+			dir++;
 		}
 		i++;
 	}
-	return (len - var);
+	return (len - dir);
 }
 /**
  * printf_format - Function
@@ -57,6 +56,13 @@ void printf_format(va_list arg_list, const char *format, char *output)
 				string = va_arg(arg_list, char *);
 				_strcpy(string, output + j);
 				j += _strlen(string) - 1;
+			}
+			else if (*(format + i + 1) == '%')
+			i++;
+			else
+			{
+				i++;
+				*(output + j) = *(format + i);
 			}
 			if (*(format + i + 1) == 's' || *(format + i + 1) == 'c')
 			i++;
