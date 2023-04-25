@@ -1,5 +1,6 @@
 #include "main.h"
 #include <stdarg.h>
+#include <stdlib.h>
 /**
  * count_output - Function
  *
@@ -13,6 +14,7 @@
 int count_output(va_list arg_list, const char *format)
 {
 	int i = 0, len = 0, dir = 0;
+	char *string;
 
 	while (*(format + i) != '\0')
 	{
@@ -21,7 +23,13 @@ int count_output(va_list arg_list, const char *format)
 			if (*(format + i + 1) == 'c')
 			va_arg(arg_list, int);
 			else if (*(format + i + 1) == 's')
-			len += _strlen(va_arg(arg_list, char *));
+			{
+				string = va_arg(arg_list, char *);
+				if (string == NULL)
+				len += 6;
+				else
+				len += _strlen(string);
+			}
 			dir++;
 		}
 		i++;
@@ -43,6 +51,7 @@ void printf_format(va_list arg_list, const char *format, char *output)
 {
 	int i = 0, j = 0;
 	char *string;
+	char *null = "(null)";
 
 	while (*(format + i) != '\0')
 	{
@@ -54,8 +63,16 @@ void printf_format(va_list arg_list, const char *format, char *output)
 			else if (*(format + i + 1) == 's')
 			{
 				string = va_arg(arg_list, char *);
+				if (string == NULL)
+				{
+					_strcpy(null, output + j);
+					j += _strlen(null) - 1;
+				}
+				else
+				{
 				_strcpy(string, output + j);
 				j += _strlen(string) - 1;
+				}
 			}
 			else if (*(format + i + 1) == '%')
 			i++;
