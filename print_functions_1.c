@@ -37,48 +37,6 @@ int count_output(va_list arg_list, const char *format)
 	return (len - dir);
 }
 /**
- * printf_int - Function
- *
- * Description: format the integer output
- *
- * @num: The integer to print.
- *
- * Return: String containing the integer.
- */
-char *printf_int(int num)
-{
-	char *str = malloc(sizeof(char) * 12);
-	int i = 0, j;
-	char tmp;
-
-	if (num < 0)
-	{
-		num = -num;
-		str[i++] = '-';
-	}
-	if (num == 0)
-	str[i++] = '0';
-	else
-	{
-		j = i;
-		while (num > 0)
-		{
-			str[j++] = num % 10 + '0';
-			num /= 10;
-		}
-		str[j--] = '\0';
-		while (i < j)
-		{
-			tmp = str[i];
-			str[i] = str[j];
-			str[j] = tmp;
-			i++;
-			j--;
-		}
-	}
-	return (str);
-}
-/**
  * printf_format - Function
  *
  * Description: Format the final output.
@@ -92,7 +50,6 @@ char *printf_int(int num)
 void printf_format(va_list arg_list, const char *format, char *output)
 {
 	int i = 0, j = 0;
-	char *string;
 
 	while (*(format + i) != '\0')
 	{
@@ -100,20 +57,12 @@ void printf_format(va_list arg_list, const char *format, char *output)
 		if (*(format + i) == '%')
 		{
 			if (*(format + i + 1) == 'c')
-			*(output + j) = va_arg(arg_list, int);
+			*(output + j) = printf_char(va_arg(arg_list, int));
 			else if (*(format + i + 1) == 's')
-			{
-				string = va_arg(arg_list, char *);
-				if (string == NULL)
-				string = "(null)";
-				_strcpy(string, output + j);
-				j += _strlen(string) - 1;
-			}
+			j += printf_string(va_arg(arg_list, char *), output + j);
 			else if (*(format + i + 1) == 'd' || *(format + i + 1) == 'i')
 			{
-				string = printf_int(va_arg(arg_list, int));
-				_strcpy(string, output + j);
-				j += _strlen(string) - 1;
+				j += printf_int(va_arg(arg_list, int), output + j);
 				i++;
 			}
 			else if (*(format + i + 1) == '%')
