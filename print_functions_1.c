@@ -41,15 +41,16 @@ int count_output(va_list arg_list, const char *format)
  *
  * Description: format the integer output
  *
- * @integer: The integer to print.
+ * @num: The integer to print.
  *
- * return: String containing the integer.
+ * Return: String containing the integer.
  */
 char *printf_int(int num)
 {
 	char *str = malloc(sizeof(char) * 12);
 	int i = 0, j;
 	char tmp;
+
 	if (num < 0)
 	{
 		num = -num;
