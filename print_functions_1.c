@@ -1,6 +1,48 @@
 #include "main.h"
+#include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+/**
+ * bin_bits - Function
+ *
+ * Description: Returns the number of bits to store @num in binary.
+ *
+ * @num: The integer.
+ *
+ * Return: The number of bits to store @num in binary.
+ */
+int bin_bits(int num)
+{
+	int length = 0;
+
+	while (num > 0)
+	{
+		num = num / 2;
+		length++;
+	}
+
+	return (length - 1);
+}
+/**
+ * int_digit - Function
+ *
+ * Description: Returns how many digit in integer.
+ *
+ * @num: The integer.
+ *
+ * Return: Number of digits.
+ */
+int int_digit(int num)
+{
+	int count = 0;
+
+	while (num != 0)
+	{
+		num /= 10;
+		++count;
+	}
+	return (count - 1);
+}
 /**
  * count_output - Function
  *
@@ -21,15 +63,22 @@ int count_output(va_list arg_list, const char *format)
 		if (*(format + i) == '%')
 		{
 			if (*(format + i + 1) == 'c')
-			va_arg(arg_list, int);
+			{
+				va_arg(arg_list, int);
+				len++;
+			}
 			else if (*(format + i + 1) == 's')
 			{
 				string = va_arg(arg_list, char *);
 				if (string == NULL)
-				len += 6;
+					len += 6;
 				else
-				len += _strlen(string);
+					len += _strlen(string);
 			}
+			else if (*(format + i + 1) == 'b')
+				len += bin_bits(va_arg(arg_list, int));
+			else if (*(format + i + 1) == 'd' || *(format + i + 1) == 'i')
+				len += int_digit(va_arg(arg_list, int));
 			dir++;
 		}
 		i++;
@@ -57,9 +106,9 @@ void printf_format(va_list arg_list, const char *format, char *output)
 		if (*(format + i) == '%')
 		{
 			if (*(format + i + 1) == 'c')
-			*(output + j) = printf_char(va_arg(arg_list, int));
+				*(output + j) = printf_char(va_arg(arg_list, int));
 			else if (*(format + i + 1) == 's')
-			j += printf_string(va_arg(arg_list, char *), output + j);
+				j += printf_string(va_arg(arg_list, char *), output + j);
 			else if (*(format + i + 1) == 'd' || *(format + i + 1) == 'i')
 			{
 				j += printf_int(va_arg(arg_list, int), output + j);
@@ -71,14 +120,14 @@ void printf_format(va_list arg_list, const char *format, char *output)
 				i++;
 			}
 			else if (*(format + i + 1) == '%')
-			i++;
+				i++;
 			else
 			{
 				i++;
 				*(output + j) = *(format + i);
 			}
 			if (*(format + i + 1) == 's' || *(format + i + 1) == 'c')
-			i++;
+				i++;
 		}
 		i++;
 		j++;
