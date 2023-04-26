@@ -25,6 +25,11 @@ int _printf(const char *format, ...)
 	va_end(arg_list);
 	len += _strlen(format);
 	output = malloc(len * sizeof(char));
+	if (output == NULL)
+	{
+		free(output);
+		return (-1);
+	}
 	va_start(arg_list, format);
 	printf_format(arg_list, format, output);
 	while (*(output + i) != '\0')
@@ -32,6 +37,7 @@ int _printf(const char *format, ...)
 		write(1, output + i, 1);
 		i++;
 	}
+	free(output);
 	va_end(arg_list);
 	return (i);
 }
