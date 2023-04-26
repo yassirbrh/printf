@@ -18,6 +18,7 @@ int printf_bin(int num, char *output)
 
 	if (bin == NULL)
 	{
+		free(bin);
 		return (NULL);
 	}
 	if (num == 0)
