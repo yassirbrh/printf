@@ -19,7 +19,7 @@ int printf_bin(int num, char *output)
 	if (bin == NULL)
 	{
 		free(bin);
-		return (NULL);
+		return (-1);
 	}
 	if (num == 0)
 	{
