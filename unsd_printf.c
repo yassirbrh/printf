@@ -30,11 +30,14 @@ int printf_unsd(unsigned int num, char *output)
 		while (i < j)
 		{
 			j = i;
-			while (num > 0)
+			while (i < j)
+			{
+				tmp = str[i];
 				str[i] = str[j];
-			str[j] = tmp;
-			i++;
-			j--;
+				str[j] = tmp;
+				i++;
+				j--;
+			}
 		}
 	}
 	_strcpy(str, output);
