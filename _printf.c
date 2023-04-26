@@ -1,8 +1,7 @@
 #include "main.h"
-#include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <unistd.h> 
 /**
  * _printf - Function
  *
@@ -19,7 +18,7 @@ int _printf(const char *format, ...)
 	int len, i;
 
 	if (format == NULL)
-	return (-1);
+		return (-1);
 	i = len = 0;
 	va_start(arg_list, format);
 	len = count_output(arg_list, format);
@@ -33,6 +32,8 @@ int _printf(const char *format, ...)
 	}
 	va_start(arg_list, format);
 	printf_format(arg_list, format, output);
+	if (_strcmp((char *)format, output) == 0)
+		len++;
 	while (i < len)
 	{
 		write(1, output + i, 1);

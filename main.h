@@ -7,6 +7,7 @@
 int _printf(const char *format, ...);
 int _strlen(const char *str);
 int _strcpy(char *str1, char *str2);
+int _strcmp(char *str1, char *str2);
 int count_output(va_list arg_list, const char *format);
 void printf_format(va_list arg_list, const char *format, char *output);
 int printf_char(char c);
