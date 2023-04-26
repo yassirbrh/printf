@@ -12,17 +12,6 @@ void printf_format(va_list arg_list, const char *format, char *output);
 int printf_char(char c);
 int printf_string(char *string, char *output);
 int printf_int(int num, char *output);
-/**
- * struct printf_functions - struct
- *
- * Description: links directives with functions.
- *
- * @dir: Directives.
- * @f: Functions.
- */
-typedef struct printf_functions
-{
-	char *dir;
-	int (*f)();
-} printf_f;
+int printf_bin(int num, char *output);
+
 #endif /* MAIN_H */

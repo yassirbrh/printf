@@ -65,6 +65,11 @@ void printf_format(va_list arg_list, const char *format, char *output)
 				j += printf_int(va_arg(arg_list, int), output + j);
 				i++;
 			}
+			else if (*(format + i + 1) == 'b')
+			{
+				j += printf_bin(va_arg(arg_list, int), output + j);
+				i++;
+			}
 			else if (*(format + i + 1) == '%')
 			i++;
 			else
