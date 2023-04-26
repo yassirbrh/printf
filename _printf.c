@@ -25,6 +25,8 @@ int _printf(const char *format, ...)
 	va_end(arg_list);
 	len += _strlen(format);
 	output = malloc(len * sizeof(char));
+	if (output == NULL)
+		return NULL;
 	va_start(arg_list, format);
 	printf_format(arg_list, format, output);
 	while (*(output + i) != '\0')
