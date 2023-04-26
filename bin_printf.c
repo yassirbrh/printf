@@ -16,6 +16,11 @@ int printf_bin(int num, char *output)
 	int i = 0, j = 0, length;
 	char temp;
 
+	if (bin == NULL)
+	{
+		free(bin);
+		return (-1);
+	}
 	if (num == 0)
 	{
 		_strcpy("0", output);
@@ -43,5 +48,4 @@ int printf_bin(int num, char *output)
 	length = _strlen(bin) - 1;
 	free(bin);
 	return (length);
-
 }
