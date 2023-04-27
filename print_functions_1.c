@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <limits.h>
 /**
  * bin_bits - Function
  *
@@ -36,6 +37,28 @@ int int_digit(int num)
 {
 	int count = 0;
 
+	while (num != 0)
+	{
+		num /= 10;
+		++count;
+	}
+	return (count - 1);
+}
+/**
+ * uint_digit - Function
+ *
+ * Description: Returns how many digit in unsigned integer.
+ *
+ * @num: The integer.
+ *
+ * Return: Number of digits.
+ */
+int uint_digit(int num)
+{
+	int count = 0;
+
+	if (num < 0)
+	num = UINT_MAX;
 	while (num != 0)
 	{
 		num /= 10;
@@ -79,6 +102,8 @@ int count_output(va_list arg_list, const char *format)
 				len += bin_bits(va_arg(arg_list, int));
 			else if (*(format + i + 1) == 'd' || *(format + i + 1) == 'i')
 				len += int_digit(va_arg(arg_list, int));
+			else if (*(format + i + 1) == 'u')
+				len += uint_digit(va_arg(arg_list, int));
 			dir++;
 		}
 		i++;
@@ -121,6 +146,16 @@ void printf_format(va_list arg_list, const char *format, char *output)
 			}
 			else if (*(format + i + 1) == '%')
 				i++;
+			else if (*(format + i + 1) == 'u')
+			{
+				j += printf_unsd(va_arg(arg_list, int), output + j);
+				i++;
+			}
+			else if (*(format + i + 1) == 'o')
+			{
+				j += printf_oct(va_arg(arg_list, int), output + j);
+				i++;
+			}
 			else
 			{
 				i++;

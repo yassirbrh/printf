@@ -14,5 +14,7 @@ int printf_char(char c);
 int printf_string(char *string, char *output);
 int printf_int(int num, char *output);
 int printf_bin(int num, char *output);
+int printf_unsd(unsigned int num, char *output);
+int printf_oct(int num, char *output);
 
 #endif /* MAIN_H */
