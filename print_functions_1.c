@@ -4,21 +4,22 @@
 #include <stdlib.h>
 #include <limits.h>
 /**
- * bin_bits - Function
+ * calculate_max_digits - Function
  *
- * Description: Returns the number of bits to store @num in binary.
+ * Description: Returns the number of digits to store @num in the base.
  *
  * @num: The integer.
+ * @base: The base to convert the number to.
  *
- * Return: The number of bits to store @num in binary.
+ * Return: The number of digits to store @num in the base.
  */
-int bin_bits(int num)
+int calculate_max_digits(int num, int base)
 {
 	int length = 0;
 
 	while (num > 0)
 	{
-		num = num / 2;
+		num = num / base;
 		length++;
 	}
 
@@ -58,7 +59,7 @@ int uint_digit(int num)
 	int count = 0;
 
 	if (num < 0)
-	num = UINT_MAX;
+		num = UINT_MAX;
 	while (num != 0)
 	{
 		num /= 10;
@@ -99,7 +100,11 @@ int count_output(va_list arg_list, const char *format)
 					len += _strlen(string);
 			}
 			else if (*(format + i + 1) == 'b')
-				len += bin_bits(va_arg(arg_list, int));
+				len += calculate_max_digits(va_arg(arg_list, int), 2);
+			else if (*(format + i + 1) == 'o')
+				len += calculate_max_digits(va_arg(arg_list, int), 8);
+			else if (*(format + i + 1) == 'x' || *(format + i + 1) == 'X')
+				len += calculate_max_digits(va_arg(arg_list, int), 16);
 			else if (*(format + i + 1) == 'd' || *(format + i + 1) == 'i')
 				len += int_digit(va_arg(arg_list, int));
 			else if (*(format + i + 1) == 'u')
@@ -154,6 +159,11 @@ void printf_format(va_list arg_list, const char *format, char *output)
 			else if (*(format + i + 1) == 'o')
 			{
 				j += printf_oct(va_arg(arg_list, int), output + j);
+				i++;
+			}
+			else if (*(format + i + 1) == 'x' || *(format + i + 1) == 'X')
+			{
+				j += printf_hex(va_arg(arg_list, int), output + j, *(format + i + 1));
 				i++;
 			}
 			else

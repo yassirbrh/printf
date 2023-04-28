@@ -16,5 +16,6 @@ int printf_int(int num, char *output);
 int printf_bin(int num, char *output);
 int printf_unsd(unsigned int num, char *output);
 int printf_oct(int num, char *output);
+int printf_hex(int num, char *output, char dir);
 
 #endif /* MAIN_H */
