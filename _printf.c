@@ -33,6 +33,7 @@ int _printf(const char *format, ...)
 	printf_format(arg_list, format, output);
 	while (i < len)
 	{
+		/*printf("%d ", *(output + i));*/
 		write(1, output + i, 1);
 		i++;
 	}
