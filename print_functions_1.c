@@ -79,8 +79,9 @@ int uint_digit(int num)
  */
 int count_output(va_list arg_list, const char *format)
 {
-	int i = 0, len = 0, dir = 0;
+	int i = 0, len = 0, dir = 0, k;
 	char *string;
+	char *dirs = "csdiboxXu";
 
 	while (*(format + i) != '\0')
 	{
@@ -99,6 +100,8 @@ int count_output(va_list arg_list, const char *format)
 				else
 					len += _strlen(string);
 			}
+			else if (*(format + i + 1) == '%')
+				dir++;
 			else if (*(format + i + 1) == 'b')
 				len += calculate_max_digits(va_arg(arg_list, int), 2);
 			else if (*(format + i + 1) == 'o')
@@ -109,7 +112,16 @@ int count_output(va_list arg_list, const char *format)
 				len += int_digit(va_arg(arg_list, int));
 			else if (*(format + i + 1) == 'u')
 				len += uint_digit(va_arg(arg_list, int));
-			dir += 2;
+			k = 0;
+			while (*(dirs + k) != '\0')
+			{
+				if (*(dirs + k) == *(format + i + 1))
+				{
+					dir += 2;
+					break;
+				}
+				k++;
+			}
 		}
 		i++;
 	}
@@ -167,11 +179,13 @@ void printf_format(va_list arg_list, const char *format, char *output)
 				j += printf_hex(va_arg(arg_list, int), output + j, *(format + i + 1));
 				i++;
 			}
+			/*
 			else
 			{
 				i++;
 				*(output + j) = *(format + i);
 			}
+			*/
 			if (*(format + i + 1) == 's' || *(format + i + 1) == 'c')
 				i++;
 		}
