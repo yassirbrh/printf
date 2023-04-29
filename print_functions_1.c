@@ -116,11 +116,11 @@ int count_output(va_list arg_list, const char *format)
 			}
 			else if (ch == 'b' || ch == 'o' || ch == 'x' || ch == 'X')
 				len += calculate_max_digits(va_arg(arg_list, int), ch);
-			else if (*(format + i + 1) == 'd' || *(format + i + 1) == 'i')
+			else if (ch == 'd' || ch == 'i')
 				len += int_digit(va_arg(arg_list, int));
-			else if (*(format + i + 1) == 'u')
+			else if (ch == 'u')
 				len += uint_digit(va_arg(arg_list, int));
-			if (strchr("csdiboxXu", *(format + i + 1)) != NULL)
+			if (strchr("csdiboxXu", ch) != NULL)
 				dir += 2;
 		}
 		i++;
