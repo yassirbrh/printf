@@ -51,5 +51,5 @@ int printf_int(int number, char *output)
 		str[len - 1]++;
 	_strcpy(str, output);
 	free(str);
-	return (len - 1);
+	return (len);
 }
