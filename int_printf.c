@@ -1,21 +1,25 @@
 #include "main.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <limits.h>
 /**
  * printf_int - Function
  *
  * Description: format the integer output
  *
- * @num: The integer to add to output.
+ * @number: The integer to add to output.
  * @output: The Output to add num to.
  *
  * Return: The length of string appended to output..
  */
-int printf_int(int num, char *output)
+int printf_int(int number, char *output)
 {
 	char *str = malloc(sizeof(char) * 12);
-	int i = 0, j;
+	int i = 0, j, len, num = number;
 	char tmp;
 
+	if (num == INT_MIN)
+		num++;
 	if (num < 0)
 	{
 		num = -num;
@@ -26,7 +30,7 @@ int printf_int(int num, char *output)
 	else
 	{
 		j = i;
-		while (num > 0)
+		while (num != 0)
 		{
 			str[j++] = num % 10 + '0';
 			num /= 10;
@@ -41,6 +45,10 @@ int printf_int(int num, char *output)
 			j--;
 		}
 	}
+	len = _strlen(str);
+	if (number == INT_MIN)
+		str[len - 1]++;
 	_strcpy(str, output);
-	return (_strlen(str) - 1);
+	free(str);
+	return (len);
 }

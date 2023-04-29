@@ -46,12 +46,19 @@ int int_digit(int num)
 {
 	int count = 0;
 
+	if (num < 0)
+	{
+		++count;
+		num = -num;
+	}
+	else if (num == 0)
+		return (1);
 	while (num != 0)
 	{
 		num /= 10;
 		++count;
 	}
-	return (count - 1);
+	return (count);
 }
 /**
  * uint_digit - Function
@@ -73,7 +80,7 @@ int uint_digit(int num)
 		num /= 10;
 		++count;
 	}
-	return (count - 1);
+	return (count);
 }
 /**
  * count_output - Function
