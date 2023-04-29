@@ -102,6 +102,8 @@ int count_output(va_list arg_list, const char *format)
 			}
 			else if (*(format + i + 1) == '%')
 				dir++;
+			else if (*(format + i + 1) == '\0')
+				len--;
 			else if (*(format + i + 1) == 'b')
 				len += calculate_max_digits(va_arg(arg_list, int), 2);
 			else if (*(format + i + 1) == 'o')
