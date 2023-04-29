@@ -31,10 +31,6 @@ int _printf(const char *format, ...)
 	}
 	va_start(arg_list, format);
 	printf_format(arg_list, format, output);
-	/**
-	if (_strcmp((char *)format, output) == 0)
-		len++;
-	*/
 	while (i < len)
 	{
 		write(1, output + i, 1);

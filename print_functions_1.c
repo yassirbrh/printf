@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <string.h>
 #include <limits.h>
 /**
  * calculate_max_digits - Function
@@ -9,21 +10,28 @@
  * Description: Returns the number of digits to store @num in the base.
  *
  * @num: The integer.
- * @base: The base to convert the number to.
+ * @num_sys: The numeral system to convert the number to.
  *
  * Return: The number of digits to store @num in the base.
  */
-int calculate_max_digits(int num, int base)
+int calculate_max_digits(int num, char num_sys)
 {
 	int length = 0;
+	int base;
 
+	if (num_sys == 'b')
+		base = 2;
+	else if (num_sys == 'o')
+		base = 8;
+	else if (num_sys == 'x' || num_sys == 'X')
+		base = 16;
 	while (num > 0)
 	{
 		num = num / base;
 		length++;
 	}
 
-	return (length - 1);
+	return (length);
 }
 /**
  * int_digit - Function
@@ -79,51 +87,41 @@ int uint_digit(int num)
  */
 int count_output(va_list arg_list, const char *format)
 {
-	int i = 0, len = 0, dir = 0, k;
-	char *string;
-	char *dirs = "csdiboxXu";
+	int i = 0, len = 0, dir = 0, ch;
 
 	while (*(format + i) != '\0')
 	{
 		if (*(format + i) == '%')
 		{
-			if (*(format + i + 1) == 'c')
+			ch = *(format + i + 1);
+			if (ch == 'c')
 			{
 				va_arg(arg_list, int);
 				len++;
 			}
-			else if (*(format + i + 1) == 's')
+			else if (ch == 's')
 			{
-				string = va_arg(arg_list, char *);
+				char *string = va_arg(arg_list, char *);
+
 				if (string == NULL)
 					len += 6;
 				else
 					len += _strlen(string);
 			}
-			else if (*(format + i + 1) == '%')
+			else if (ch == '%' || ch == '\0')
+			{
+				if (ch == '%')
+				i++;
 				dir++;
-			else if (*(format + i + 1) == '\0')
-				len--;
-			else if (*(format + i + 1) == 'b')
-				len += calculate_max_digits(va_arg(arg_list, int), 2);
-			else if (*(format + i + 1) == 'o')
-				len += calculate_max_digits(va_arg(arg_list, int), 8);
-			else if (*(format + i + 1) == 'x' || *(format + i + 1) == 'X')
-				len += calculate_max_digits(va_arg(arg_list, int), 16);
+			}
+			else if (ch == 'b' || ch == 'o' || ch == 'x' || ch == 'X')
+				len += calculate_max_digits(va_arg(arg_list, int), ch);
 			else if (*(format + i + 1) == 'd' || *(format + i + 1) == 'i')
 				len += int_digit(va_arg(arg_list, int));
 			else if (*(format + i + 1) == 'u')
 				len += uint_digit(va_arg(arg_list, int));
-			k = 0;
-			while (*(dirs + k) != '\0')
-			{
-				if (*(dirs + k) == *(format + i + 1))
-				{
-					dir += 2;
-					break;
-				}
-				k++;
-			}
+			if (strchr("csdiboxXu", *(format + i + 1)) != NULL)
+				dir += 2;
 		}
 		i++;
 	}
@@ -155,40 +153,16 @@ void printf_format(va_list arg_list, const char *format, char *output)
 			else if (*(format + i + 1) == 's')
 				j += printf_string(va_arg(arg_list, char *), output + j);
 			else if (*(format + i + 1) == 'd' || *(format + i + 1) == 'i')
-			{
 				j += printf_int(va_arg(arg_list, int), output + j);
-				i++;
-			}
 			else if (*(format + i + 1) == 'b')
-			{
 				j += printf_bin(va_arg(arg_list, int), output + j);
-				i++;
-			}
-			else if (*(format + i + 1) == '%')
-				i++;
 			else if (*(format + i + 1) == 'u')
-			{
 				j += printf_unsd(va_arg(arg_list, int), output + j);
-				i++;
-			}
 			else if (*(format + i + 1) == 'o')
-			{
 				j += printf_oct(va_arg(arg_list, int), output + j);
-				i++;
-			}
 			else if (*(format + i + 1) == 'x' || *(format + i + 1) == 'X')
-			{
 				j += printf_hex(va_arg(arg_list, int), output + j, *(format + i + 1));
-				i++;
-			}
-			/*
-			else
-			{
-				i++;
-				*(output + j) = *(format + i);
-			}
-			*/
-			if (*(format + i + 1) == 's' || *(format + i + 1) == 'c')
+			if (strchr("csdibuxXo%", *(format + i + 1)) != NULL)
 				i++;
 		}
 		i++;

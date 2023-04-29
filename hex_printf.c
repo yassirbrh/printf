@@ -22,22 +22,15 @@ int printf_hex(int num, char *output, char dir)
 		free(hex);
 		return (-1);
 	}
-	if (num == 0)
-	{
-		_strcpy("0", output);
-		return (0);
-	}
+	for (i = 0; i < 10; i++)
+		hex_chars[i] = i + '0';
 	if (dir == 'x')
 	{
-		for (i = 0; i < 10; i++)
-			hex_chars[i] = i + '0';
 		for (i = 10; i < 16; i++)
 			hex_chars[i] = i - 10 + 'a';
 	}
 	else if (dir == 'X')
 	{
-		for (i = 0; i < 10; i++)
-			hex_chars[i] = i + '0';
 		for (i = 10; i < 16; i++)
 			hex_chars[i] = i - 10 + 'A';
 	}
@@ -54,13 +47,10 @@ int printf_hex(int num, char *output, char dir)
 	while (i < j)
 	{
 		temp = hex[i];
-		hex[i] = hex[j];
-		hex[j] = temp;
-		i++;
-		j--;
+		hex[i++] = hex[j];
+		hex[j--] = temp;
 	}
 	_strcpy(hex, output);
 	free(hex);
-
 	return (len);
 }
