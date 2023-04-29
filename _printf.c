@@ -23,7 +23,6 @@ int _printf(const char *format, ...)
 	va_start(arg_list, format);
 	len = count_output(arg_list, format);
 	va_end(arg_list);
-	len += _strlen(format);
 	output = malloc(len * sizeof(char));
 	if (output == NULL)
 	{

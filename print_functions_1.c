@@ -109,10 +109,11 @@ int count_output(va_list arg_list, const char *format)
 				len += int_digit(va_arg(arg_list, int));
 			else if (*(format + i + 1) == 'u')
 				len += uint_digit(va_arg(arg_list, int));
-			dir++;
+			dir += 2;
 		}
 		i++;
 	}
+	len += _strlen(format);
 	return (len - dir);
 }
 /**
