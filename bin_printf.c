@@ -24,7 +24,7 @@ int printf_bin(int num, char *output)
 	if (num == 0)
 	{
 		_strcpy("0", output);
-		return (0);
+		return (1);
 	}
 
 	while (num > 0)

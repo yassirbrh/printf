@@ -25,10 +25,15 @@ int calculate_max_digits(int num, char num_sys)
 		base = 8;
 	else if (num_sys == 'x' || num_sys == 'X')
 		base = 16;
-	while (num > 0)
-	{
-		num = num / base;
+	if (num == 0)
 		length++;
+	else
+	{
+		while (num > 0)
+		{
+			num = num / base;
+			length++;
+		}
 	}
 
 	return (length);
@@ -75,6 +80,8 @@ int uint_digit(int num)
 
 	if (num < 0)
 		num = UINT_MAX;
+	if (num == 0)
+	return (1);
 	while (num != 0)
 	{
 		num /= 10;
@@ -118,7 +125,7 @@ int count_output(va_list arg_list, const char *format)
 			else if (ch == '%' || ch == '\0')
 			{
 				if (ch == '%')
-				i++;
+					i++;
 				dir++;
 			}
 			else if (ch == 'b' || ch == 'o' || ch == 'x' || ch == 'X')
