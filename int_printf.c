@@ -46,10 +46,10 @@ int printf_int(int number, char *output)
 		}
 	}
 	len = _strlen(str);
-	printf("%d \n", len);
+	/*printf("%d \n", len);*/
 	if (number == INT_MIN)
 		str[len - 1]++;
 	_strcpy(str, output);
 	free(str);
-	return (len);
+	return (len - 1);
 }
