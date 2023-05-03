@@ -17,5 +17,8 @@ int printf_bin(int num, char *output);
 int printf_unsd(unsigned int num, char *output);
 int printf_oct(int num, char *output);
 int printf_hex(int num, char *output, char dir);
+char *bin_to_int(char *bin);
+char *int_to_bin(int num);
+int _pow(int base, int exponent);
 
 #endif /* MAIN_H */

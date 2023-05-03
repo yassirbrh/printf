@@ -81,7 +81,10 @@ int uint_digit(int num)
 	int count = 0;
 
 	if (num < 0)
-		num = UINT_MAX;
+	{
+		count = _strlen(bin_to_int(int_to_bin(num)));
+		return (count);
+	}
 	if (num == 0)
 	return (1);
 	while (num != 0)

@@ -24,6 +24,12 @@ int printf_unsd(unsigned int num, char *output)
 	}
 	if (num == 0)
 		str[i++] = '0';
+	else if ((int)num < 0)
+	{
+		_strcpy(bin_to_int(int_to_bin(num)), str);
+		_strcpy(str, output);
+		return (_strlen(str) - 1);
+	}
 	else
 	{
 		if ((int)num < 0)

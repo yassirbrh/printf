@@ -23,6 +23,34 @@ char *int_to_bin(int num)
 	return (bin);
 }
 /**
+ * bin_to_int - Function
+ *
+ * Description: Returns the conversion of binary to int in a string format.
+ *
+ * @bin: The binary string.
+ *
+ * Return: Integer as a string.
+ */
+char *bin_to_int(char *bin)
+{
+	int len = _strlen(bin), num_digits;
+	int power = len - 1;
+	int result = 0, i;
+	char *str;
+
+	for (i = 0; i < len; i++)
+	{
+		if (bin[i] == '1')
+		result += _pow(2, power);
+		power--;
+	}
+	num_digits = snprintf(NULL, 0, "%d", result);
+	str = malloc((num_digits + 1) * sizeof(char));
+	sprintf(str, "%u", result);
+	return (str);
+}
+
+/**
  * printf_bin - Function
  *
  * Description: Convert an unsigned integer into binary.
