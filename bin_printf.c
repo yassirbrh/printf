@@ -1,6 +1,28 @@
 #include "main.h"
 #include <stdlib.h>
 /**
+ * int_to_bin - Function
+ *
+ * Description: Convert negative integer to binary
+ *
+ * @num: Negative number to convert to binary.
+ *
+ * Return: Pointer to the result.
+ */
+char *int_to_bin(int num)
+{
+	char *bin = malloc(33 * sizeof(char));
+	int i;
+
+	for (i = 31; i >= 0; i--)
+	{
+		bin[i] = (num & 1) ? '1' : '0';
+		num >>= 1;
+	}
+	bin[32] = '\0';
+	return (bin);
+}
+/**
  * printf_bin - Function
  *
  * Description: Convert an unsigned integer into binary.
@@ -26,7 +48,11 @@ int printf_bin(int num, char *output)
 		_strcpy("0", output);
 		return (1);
 	}
-
+	if (num < 0)
+	{
+		_strcpy(int_to_bin(num), output);
+		return (32);
+	}
 	while (num > 0)
 	{
 		bin[i] = (num % 2) + '0';

@@ -25,6 +25,8 @@ int calculate_max_digits(int num, char num_sys)
 		base = 8;
 	else if (num_sys == 'x' || num_sys == 'X')
 		base = 16;
+	if (num < 0 && num_sys == 'b')
+		return (32);
 	if (num == 0)
 		length++;
 	else
